@@ -23,3 +23,12 @@ void ds_swap(void *a,void *b,int length)
     free(temp);
 }
 
+void *ds_realloc(void *ptr, size_t size)
+{ 
+    void *result = realloc(ptr, size);
+    if(result == NULL){
+        fprintf(stderr, "the memory is full!\n");
+        exit(1);
+    }
+    return result;
+}
