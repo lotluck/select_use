@@ -155,7 +155,24 @@ int ds_read(int fd,void *buffer,int length)
     return (length - bytes_left);
 }
 
+void ds_setnonblocking(int sockfd)
+{
+      int opts;
+      int ret;
 
+      opts = fcntl(sockfd,F_GETFL);
+      if(opts < 0){
+          fprintf(stderr,"fcntl F_GETFL  error\n");
+          exit(1);
+      }//end if
+      opts = opts | O_NONBLOCK;
+      ret = fcntl(sockfd,F_SETFL,opts);
+      if(ret < 0){
+          fprintf(stderr,"fcntl F_SETFL error\n");
+          exit(0);
+      }
+
+}
 
 
 

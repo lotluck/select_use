@@ -11,13 +11,24 @@
 #include <arpa/inet.h>
 #include <errno.h>
 #include <netdb.h>
+#include <fcntl.h>
+#include <sys/epoll.h>
+#include <sys/ioctl.h>
+#include <assert.h>
 
 
-#define    ds_PORT        (8888)                    // 我的常用端口
+
+#define    ds_PORT        (8080)                    // 我的常用端口
 #define    BREAK_CONNECT   "I_LOVE_YOU_I_MISS_YOU_CAO_YAN_QIN"  //定义断开连接的宏定义
 #define    BACKLOG         (5)
 
 
+
+#define    ds_two_max(a,b)          ((a)>(b)?(a):(b))
+#define    ds_three_max(a,b,c)      (((((a)>(b))?(a):(b))>(c))?((((a)>(b))?(a):(b)):(c)))
+
+#define    ds_two_min(a,b)          ((a)<(b)?(a):(b))
+#define    ds_three_min(a,b,c)      (((((a)<(b))?(a):(b))<(c))?((((a)<(b))?(a):(b)):(c)))
 
 //封装 socket
 int ds_socket(int domain,int type,int protocol);
@@ -49,6 +60,10 @@ int   ds_write(int fd,void *buffer,int length);
 
 //完整的读，错误返回-1，成功返回0
 int   ds_read (int fd,void *buffer,int length);
+
+// 设置非阻塞
+void ds_setnonblocking(int sockfd);
+
 
 
 #endif
